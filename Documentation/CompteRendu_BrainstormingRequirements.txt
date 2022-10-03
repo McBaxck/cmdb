@@ -1,0 +1,20 @@
+03/10/2022
+
+**Base de données**
+- Model conceptuel de données (sécurité ?)
+- Création des tables et relations associées (SQLlite)
+
+**Back**
+- API Rest avec Flask (python 3)
+- Routes des requêtes
+- Mapping des résultats (design du json)
+- Instanciation des classes / création (conception avec PlantUML)
+- Pour chacun des serveurs, norme RAID 0,1,2,5 ou 6
+
+**Testing**
+- tests unitaires (PyTest) pour vérifier pré et post conditions
+
+**Commentaire (code-contracts)**
+- Clause d'invariance
+- Contrainte de type
+- Pré et post conditions
