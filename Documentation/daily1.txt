@@ -24,8 +24,10 @@ Jérôme :
 compte rendu des réunions d'équipe
 ajout de routes au serveur en fonction du MCD produit
 développement de la bdd en fonction du MCD produit
-rédaction des issues
 rédaction du wiki : page gestion des branches + page spécifications
 -> difficultés remontées 
 demande de code review de la bdd developpée
 difficulté à clone le repo = résolution en ne passant pas par le réseau de l'école
+
+TO DO 
+rédaction des issues
