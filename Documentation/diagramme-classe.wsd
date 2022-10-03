@@ -1,0 +1,75 @@
+@startuml Classe FSI
+
+abstract Server {
+    string label
+    int moRam
+    string cpu
+    string gpu
+    string hostname
+}
+
+class Physique {
+
+}
+
+class VM {
+
+}
+
+class DD {
+    string label
+    int goEspaceLibre
+    int goESpaceUtilise
+}
+
+class Partition {
+    string label
+    int goEspaceLibre
+    int goEspaceUtilise
+}
+
+class InterfaceReseau {
+    string ipSource
+    int port
+    string passerelle
+    string ipFirewall
+}
+
+class IpTableRules {
+    string ipSource
+    string ipDestination
+    int port
+    string protocol
+    string[] options
+}
+
+class TableRoutage {
+    string ipDestination
+    string masqueReseau
+    string ipPasserrelle
+    string ipInterface
+    int TTL
+}
+
+class Securite {
+    string ipFirewall
+}
+
+enum RAID {
+}
+
+enum Policy {
+}
+
+Physique --> Server
+VM --> Server
+InterfaceReseau *-- Server
+Partition *-- DD
+DD *-- Server
+RAID o-- DD
+IpTableRules *-- Securite
+Securite o-- Server
+InterfaceReseau --* TableRoutage
+IpTableRules --o Policy
+
+@enduml
