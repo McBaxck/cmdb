@@ -1,0 +1,29 @@
+04/10/2022
+
+L'ensemble de l'équipe a réalisé un brainstorming sur les besoins du projet afin de définir le sprint planning
+On s'est également mis d'accord sur notre gestion des branches git
+
+Romain et Adam :
+-> tâches réalisées
+montée en compétence sur Flask
+mise en place du serveur
+création des premières Routes
+-> difficultés remontées 
+RAS
+
+
+Paul-édouard et Léo : 
+-> tâches réalisées
+réalisation du MCD avec looping
+réalisation du diagramme de classes avec PlantUML
+-> difficultés remontées
+RAS
+
+Jérôme : 
+-> tâches réalisées
+compte rendu des réunions d'équipe
+ajout de routes au serveur en fonction du MCD produit
+développement de la bdd en fonction du MCD produit
+-> difficultés remontées 
+demande de code review de la bdd developpée
+difficulté à clone le repo = résolution en ne passant pas par le réseau de l'école
