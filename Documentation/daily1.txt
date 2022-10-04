@@ -1,33 +1,55 @@
 04/10/2022
 
 L'ensemble de l'équipe a réalisé un brainstorming sur les besoins du projet afin de définir le sprint planning
-On s'est également mis d'accord sur notre gestion des branches git
+On s'est également mis d'accord sur notre gestion des branches git (Cf. Wifi du projet sur GitHub)
 
-Romain et Adam :
+**Romain**
 -> tâches réalisées
-montée en compétence sur Flask
-mise en place du serveur
-création des premières Routes
--> difficultés remontées 
+montée en compétence sur Flask (en collaboration avec Adam)
+mise en place du serveur (en collaboration avec Adam)
+création des premières Routes (en collaboration avec Adam)
+-> remarques remontées 
 RAS
+-> tâches à réaliser
+Développement des classes
 
-
-Paul-édouard et Léo : 
+**Adam**
 -> tâches réalisées
-réalisation du MCD avec looping
-réalisation du diagramme de classes avec PlantUML
--> difficultés remontées
-RAS
+montée en compétence sur Flask (en collaboration avec Romain)
+mise en place du serveur (en collaboration avec Romain)
+création des premières Routes (en collaboration avec Romain)
+relecture du code serveur ajouté par Jérôme
+-> remarques remontées 
+Besoin de la partie SqlLite pour poursuivre la partie serveur
+-> tâches à réaliser
+Poursuivre développement du serveur
 
-Jérôme : 
+**Paul-edouard**
 -> tâches réalisées
-compte rendu des réunions d'équipe
+réalisation du MCD avec looping (en collaboration avec Léo)
+réalisation du diagramme de classes avec PlantUML (en collaboration avec Léo)
+-> remarques remontées
+Souhaite utiliser MariaDB et non SqlLite comme défini initialement
+Looping peut générer le code SQL depuis le MCD produit
+-> tâches à réaliser
+finaliser MCD
+
+**Léo**
+-> tâches réalisées
+réalisation du MCD avec looping (en collaboration avec Paul-edouard)
+réalisation du diagramme de classes avec PlantUML (en collaboration avec Paul-edouard)
+-> remarques remontées
+pas accès au gitlab de l'école, mail envoyé à Mr Gageo à ce sujet
+-> tâches à réaliser
+finaliser MCD
+
+**Jérôme**
+-> tâches réalisées
+compte rendu réunion d'équipe
 ajout de routes au serveur en fonction du MCD produit
 développement de la bdd en fonction du MCD produit
 rédaction du wiki : page gestion des branches + page spécifications
--> difficultés remontées 
-demande de code review de la bdd developpée
+-> remarques remontées 
 difficulté à clone le repo = résolution en ne passant pas par le réseau de l'école
-
-TO DO 
+-> tâches à réaliser
 rédaction des issues
