@@ -1,4 +1,9 @@
-class ServiceFactory : 
+from database import Database
+from dataclasses import dataclass
+
+
+@dataclass
+class ServiceFactory:
     database: Database
     serverDatabase: ServerDatabase
     disqueDurDatabase: DisqueDurDatabase
@@ -11,47 +16,47 @@ class ServiceFactory :
     @staticmethod
     def getDatabase():
         if database == null:
-            database = new Database()
+            database = Database()
         return database
 
     @staticmethod
     def getServerDatabase():
         if serverDatabase == null:
-            serverDatabase = new ServerDatabase()
+            serverDatabase = ServerDatabase()
         return serverDatabase
 
     @staticmethod
     def getDisqueDurDatabase():
         if disqueDurDatabase == null:
-            disqueDurDatabase = new DisqueDurDatabase()
-        return disqueDurDatabase   
+            disqueDurDatabase = DisqueDurDatabase()
+        return disqueDurDatabase
 
     @staticmethod
     def getInterfaceReseauDatabase():
         if interfaceReseauDatabase == null:
-            interfaceReseauDatabase = new InterfaceReseauDatabase()
+            interfaceReseauDatabase = InterfaceReseauDatabase()
         return interfaceReseauDatabase
-    
+
     @staticmethod
     def getSecuriteDatabase():
         if securiteDatabase == null:
-            securiteDatabase = new SecuriteDatabase()
+            securiteDatabase = SecuriteDatabase()
         return securiteDatabase
 
     @staticmethod
     def getIpTableRulesDatabase():
         if ipTableRulesDatabase == null:
-            ipTableRulesDatabase = new IpTableRulesDatabase()
+            ipTableRulesDatabase = IpTableRulesDatabase()
         return ipTableRulesDatabase
 
     @staticmethod
     def getRouteDatabase():
         if routeDatabase == null:
-            routeDatabase = new RouteDatabase()
+            routeDatabase = RouteDatabase()
         return routeDatabase
-    
+
     @staticmethod
     def getPartitionDatabase():
         if partitionDatabase == null:
-            partitionDatabase = new PartitionDatabase()
+            partitionDatabase = PartitionDatabase()
         return partitionDatabase
