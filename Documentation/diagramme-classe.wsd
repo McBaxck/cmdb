@@ -1,11 +1,11 @@
 @startuml Classe FSI
 
 abstract Server {
-    string label
-    int moRam
-    string cpu
-    string gpu
-    string hostname
+    - string label
+    - int moRam
+    - string cpu
+    - string gpu
+    - string hostname
 }
 
 class Physique {
@@ -17,42 +17,120 @@ class VM {
 }
 
 class DD {
-    string label
-    int goEspaceLibre
-    int goESpaceUtilise
+    - string label
+    - int goEspaceLibre
+    - int goESpaceUtilise
 }
 
 class Partition {
-    string label
-    int goEspaceLibre
-    int goEspaceUtilise
+    - string label
+    - int goEspaceLibre
+    - int goEspaceUtilise
 }
 
 class InterfaceReseau {
-    string ipSource
-    int port
-    string passerelle
-    string ipFirewall
+    - string ipSource
+    - int port
+    - string passerelle
+    - string ipFirewall
 }
 
 class IpTableRules {
-    string ipSource
-    string ipDestination
-    int port
-    string protocol
-    string[] options
+    - string ipSource
+    - string ipDestination
+    - int port
+    - string protocol
+    - string[] options
 }
 
-class TableRoutage {
-    string ipDestination
-    string masqueReseau
-    string ipPasserrelle
-    string ipInterface
-    int TTL
+class Route {
+    - string ipDestination
+    - string masqueReseau
+    - string ipPasserrelle
+    - string ipInterface
+    - int TTL
 }
 
 class Securite {
-    string ipFirewall
+    - string ipFirewall
+}
+
+class Database {
+    - string path
+    --
+    + open()
+    + close()
+}
+
+interface InterfaceDatabase {
+    --
+    + create(T)
+    + update(T)
+    + delete(T)
+    + selectAll()
+    + selectById(int)
+}
+
+class ServerDatabase {
+    + selectByLabel(string)
+    + selectByHostname(string)
+}
+
+class DisqueDurDatabase {
+    --
+    + selectByLabel(string)
+    + selectByEspaceLibre(int)
+    + selectByEspaceUtilise(int)
+    + selectByServer(int)
+}
+
+class PartitionDatabase {
+    --
+    + selectByLabel(string)
+    + selectByEspaceLibre(int)
+    + selectByEspaceUtilise(int)
+    + selectByDisqueDur(int)
+}
+
+class InterfaceReseauDatabase {
+    --
+    + selectByIpSource(string)
+    + selectByPort(int)
+    + selectByPasserelle(string)
+}
+
+class SecuriteDatabase {
+    --
+    + selectByIpFirewall(string)
+}
+
+class IpTableRulesDatabase {
+    --
+    + selectByIpSource(string)
+    + selectByIpDestination(string)
+    + selectByPort(int)
+    + selectByProtocol(string)
+    + selectByOption(string)
+    + selectByOptions(string[])
+}
+
+class RouteDatabase {
+    --
+    + selectByIpDestination(string)
+    + selectByMasqueReseau(string)
+    + selectByIpPasserelle(string)
+    + selectByIpInterface(string)
+}
+
+class ServiceFactory {
+    - Database database
+    - ServerDatabase ServerDatabase
+    - DisqueDurDatabase disqueDurDatabase
+    - InterfaceReseauDatabase interfaceReseauDatabase
+    - SecuriteDatabase securiteDatabase
+    - IpTableRulesDatabase ipTableRulesDatabase
+    - RouteDatabase routeDatabase
+    - PartitionDatabase partitionDatabase
 }
 
 enum RAID {
@@ -69,7 +147,15 @@ DD *-- Server
 RAID o-- DD
 IpTableRules *-- Securite
 Securite o-- Server
-InterfaceReseau --* TableRoutage
+InterfaceReseau --* Route
 IpTableRules --o Policy
+
+InterfaceDatabase <|. ServerDatabase
+InterfaceDatabase <|. PartitionDatabase
+InterfaceDatabase <|.. DisqueDurDatabase
+InterfaceDatabase <|.. SecuriteDatabase
+InterfaceDatabase <|.. RouteDatabase
+InterfaceDatabase <|... IpTableRulesDatabase
+InterfaceDatabase <|... InterfaceReseauDatabase
 
 @enduml
