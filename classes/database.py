@@ -1,6 +1,6 @@
 import sqlite3
 import logger
-from sqlite3 import Error
+from sqlite3 import Error, Connection
 from dataclasses import dataclass
 
 
@@ -16,7 +16,7 @@ class Database():
     def path(self, value: str) -> None:
         self._path = value
 
-    def _open(self) -> sqlite3.Connection:
+    def _open(self) -> Connection:
         """ Open a database and return the current connection """
         conn = None
         try:
@@ -24,7 +24,3 @@ class Database():
         except Error as e:
             quit(code=e)
         return conn
-
-    def _close(self, connection: sqlite3.Connection) -> None:
-        """ Close the current database connection """
-        connection.close()
