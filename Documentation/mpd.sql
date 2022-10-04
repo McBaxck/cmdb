@@ -2,7 +2,7 @@ CREATE TABLE Serveur(
    id_serveur INTEGER,
    label TEXT NOT NULL,
    hostname TEXT NOT NULL,
-   type TEXT NOT NULL,
+   serveur_type TEXT NOT NULL,
    cpu TEXT NOT NULL,
    gpu TEXT NOT NULL,
    PRIMARY KEY(id_serveur)
@@ -39,7 +39,7 @@ CREATE TABLE IPTable_Rules(
    ip_destination TEXT NOT NULL,
    port INTEGER NOT NULL,
    protocole TEXT NOT NULL,
-   policy TEXT NOT NULL,
+   iptable_policy TEXT NOT NULL,
    id_securite INTEGER NOT NULL,
    PRIMARY KEY(id_iptable_rules),
    FOREIGN KEY(id_securite) REFERENCES Securite(id_securite)
@@ -47,7 +47,7 @@ CREATE TABLE IPTable_Rules(
 
 CREATE TABLE IPTable_Rules_Option(
    id_iptables_rules_option INTEGER,
-   option TEXT NOT NULL,
+   iptable_option TEXT NOT NULL,
    PRIMARY KEY(id_iptables_rules_option)
 );
 
@@ -61,14 +61,14 @@ CREATE TABLE Interface_Reseau(
    FOREIGN KEY(id_serveur) REFERENCES Serveur(id_serveur)
 );
 
-CREATE TABLE Route(
-   id_route INTEGER,
+CREATE TABLE Interface_Reseau_Route(
+   id_interface_reseau_route INTEGER,
    ip_destination TEXT NOT NULL,
    masque_reseau TEXT NOT NULL,
    ip_interface TEXT NOT NULL,
    ttl INTEGER,
    id_interface_reseau INTEGER NOT NULL,
-   PRIMARY KEY(id_route),
+   PRIMARY KEY(id_interface_reseau_route),
    FOREIGN KEY(id_interface_reseau) REFERENCES Interface_Reseau(id_interface_reseau)
 );
 
