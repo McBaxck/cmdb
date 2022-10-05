@@ -32,6 +32,11 @@ from abc import ABC
         @invariant: raid enum value ("RAID_0","RAID_1","RAID_2","RAID_5","RAID_6")
         RAID(self) -> List[RAID]
 
+
+        La PhysicMachine et la classe VirtualMachine sont des enfants de la classe Server.
+
+        Un server est composé de HardDisk. (composition)
+
     """
 @dataclass
 class Server(ABC):
