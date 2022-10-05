@@ -1,6 +1,6 @@
 from cgi import test
 from dataclasses import dataclass
-from ..GenericFactory import GenericFactory
+from ..GenericFactory import *
 
 @dataclass
 class Interface_Reseau_Factory(GenericFactory):
