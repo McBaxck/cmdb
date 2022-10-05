@@ -1,5 +1,7 @@
+import sys
+sys.path.append("./")
 from classes.server.config.interface_reseau_route import InterfaceReseauRoute
-from database import Database
+from classes.database.database import Database
 
 
 class InterfaceReseauRouteDatabase():

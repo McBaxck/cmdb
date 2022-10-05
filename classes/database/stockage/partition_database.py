@@ -1,12 +1,16 @@
-from database import Database
+import sys
+sys.path.append("./")
+from classes.server.stockage.partition import Partition
+from classes.database.database import Database
+
 
 class PartitionDatabase():
-
+    
     def create(self, values) -> None:
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" INSERT INTO partition_dd(ud_partition, label, espace_libre, espace_utilise, id_disque_dur) VALUES (?, ?, ?, ?, ?) """, (value))
+        cursor.execute(""" INSERT INTO partition_dd(ud_partition, label, espace_libre, espace_utilise, id_disque_dur) VALUES (?, ?, ?, ?, ?) """, (values))
         create = cursor.commit()
         cursor.close()
         return
@@ -33,34 +37,57 @@ class PartitionDatabase():
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" SELECT * FROM partition_dd WHERE label = ? """, (label))
-        label = cursor.fetchall()
+        cursor.execute(""" SELECT * FROM partition_dd WHERE label = '""" + label + """';""")
+        rs = cursor.fetchall()
+        liste_partition = []
+        for i in rs:
+            liste_partition.append(Partition(i[1], i[2], i[3]))
         cursor.close()
-        return label
+        return liste_partition
     
     def selectByEspaceLibreBetween(min, max):
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" SELECT * FROM partition_dd WHERE espaceLibre > ? AND espaceLibre < ? """, (min, max))
-        espaceLibreBetween = cursor.fetchall()
+        cursor.execute(""" SELECT * FROM partition_dd WHERE espace_libre > ? AND espace_libre < ? """, (min, max))
+        rs = cursor.fetchall()
+        liste_partition = []
+        for i in rs:
+            liste_partition.append(Partition(i[1], i[2], i[3]))
         cursor.close()
-        return espaceLibreBetween
+        return liste_partition
 
     def selectByEspaceUtiliseBetween(min, max):
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" SELECT * FROM partition_dd WHERE espaceUtilise > ? AND espaceUtilise < ? """, (min, max))
-        espaceUtiliseBetween = cursor.fetchall()
+        cursor.execute(""" SELECT * FROM partition_dd WHERE espace_utilise >= ? AND espace_utilise <= ? """, (min, max))
+        rs = cursor.fetchall()
+        liste_partition = []
+        for i in rs:
+            liste_partition.append(Partition(i[1], i[2], i[3]))
         cursor.close()
-        return espaceUtiliseBetween
+        return liste_partition
     
-    def selectByDisqueDur(disqueDur):
+    def selectById(id):
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" SELECT * FROM partition_dd WHERE disqueDur = ? """, (disqueDur))
-        disqueDur = cursor.fetchall()
+        print(id)
+        cursor.execute("""SELECT * FROM partition_dd WHERE id_partition=?""", str(id))
+        rs = cursor.fetchone()
+        rs = Partition(rs[1], rs[2], rs[3])
         cursor.close()
-        return disqueDur
+        return rs
+
+    def selectByIdDisk(id):
+        db = Database()
+        con = db._open()
+        cursor = con.cursor()
+        cursor.execute("""SELECT * FROM partition_dd WHERE id_disque_dur=?""", str(id))
+        rs = cursor.fetchall()
+        liste_partition = []
+        for i in rs:
+            liste_partition.append(Partition(i[1], i[2], i[3]))
+        cursor.close()
+        return liste_partition

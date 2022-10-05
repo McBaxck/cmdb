@@ -1,4 +1,4 @@
-from server import Server
+from ..server import Server
 
 """_summary_
 Classe permettant de définir une contrainte de type pour les classes qui seront de type PhysicMachine

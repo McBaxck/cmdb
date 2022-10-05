@@ -1,8 +1,10 @@
 import sqlite3
 import logger
+import sys
+sys.path.append("d:\\cours\\sofware_engineering\\cmdb")
 from sqlite3 import Error, Connection
 from dataclasses import dataclass
-from database import DATABASE_PATH
+from classes.database import DATABASE_PATH
 
 
 @dataclass
