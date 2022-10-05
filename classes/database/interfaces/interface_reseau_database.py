@@ -12,7 +12,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute(""" INSERT INTO interface_reseau(id_interface_reseau, ip_source, port, ip_passerelle, id_serveur) VALUES (?, ?, ?, ?, ?) """, (self.selectLastId()+1, interfaceReseau.ipSource, interfaceReseau.port, interfaceReseau.passerelle, interfaceReseau.ipServer))
         cursor.execute()
-        cursor.close()
+        con.close()
         return
     
     def update(self, interfaceReseau: InterfaceReseau) -> None:
@@ -21,7 +21,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute(""" UPDATE interface_reseau SET ip_source = ?, port = ?, ip_passerelle = ?, id_serveur = ?) WHERE id_interface_reseau = ?""", (interfaceReseau.ipSource, interfaceReseau.port, interfaceReseau.passerelle, interfaceReseau.ipServer, interfaceReseau.idInterfaceReseau))
         cursor.execute()
-        cursor.close()
+        con.close()
         return
     
     def delete(self, interfaceReseau: InterfaceReseau) -> None:
@@ -30,7 +30,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute(""" DELETE FROM interface_reseau WHERE id_interface_reseau = ? """, (interfaceReseau.idInterfaceReseau))
         cursor.execute()
-        cursor.close()
+        con.close()
         return
 
     def selectLastId(self) -> int:
@@ -39,7 +39,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT ir.id_interface_reseau FROM interface_reseau AS ir ORDER BY ir.id_interface_reseau DESC LIMIT 0,1""")
         rs = cursor.fetchone()
-        cursor.close()
+        con.close()
         return rs
 
     def selectAll(self):
@@ -48,7 +48,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM interface_reseau""")
         rs = cursor.fetchall()
-        cursor.close()
+        con.close()
         return rs
 
     def selectById(id: int) -> InterfaceReseau:
@@ -57,7 +57,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM interface_reseau AS ir WHERE ir.id_interface_reseau = ?""", (id))
         rs = cursor.fetchone()
-        cursor.close()
+        con.close()
         return rs
 
     def selectByIpSource(ipSource: str) -> list:
@@ -66,7 +66,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM interface_reseau AS ir WHERE ir.ip_source = ?""", (ipSource))
         rs = cursor.fetchall()
-        cursor.close()
+        con.close()
         return rs
     
     def selectByPort(port: int) -> list:
@@ -75,7 +75,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM interface_reseau AS ir WHERE ir.port = ?""", (port))
         rs = cursor.fetchall()
-        cursor.close()
+        con.close()
         return rs
 
     def selectByPasserelle(passerelle: str) -> list:
@@ -84,7 +84,7 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM interface_reseau AS ir WHERE ir.passerelle = ?""", (passerelle))
         rs = cursor.fetchall()
-        cursor.close()
+        con.close()
         return rs
     
     def selectByServeur(serverId: int) -> list:
@@ -93,5 +93,5 @@ class InterfaceReseauDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM interface_reseau WHERE id_server = ?""", (serverId))
         rs = cursor.fetchall()
-        cursor.close()
+        con.close()
         return rs

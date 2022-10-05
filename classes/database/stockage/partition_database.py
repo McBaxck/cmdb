@@ -12,25 +12,27 @@ class PartitionDatabase():
         cursor = con.cursor()
         cursor.execute(""" INSERT INTO partition_dd(ud_partition, label, espace_libre, espace_utilise, id_disque_dur) VALUES (?, ?, ?, ?, ?) """, (values))
         create = cursor.commit()
-        cursor.close()
+        con.close()
         return
-    
+
     def update(self, id_partition, label, espace_libre, espace_utilise, id_disque_dur) -> None:
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" UPDATE partition_dd SET label = ?, espace_libre = ?, espace_utilise = ?, id_disque_dur = ? WHERE id_partition = ? """, (label, espace_libre, espace_utilise, id_disque_dur, id_partition))
+        cursor.execute(""" UPDATE partition_dd SET label = ?, espace_libre = ?, espace_utilise = ?, id_disque_dur = ? WHERE id_partition = ? """,
+                       (label, espace_libre, espace_utilise, id_disque_dur, id_partition))
         update = cursor.commit()
-        cursor.close()
+        con.close()
         return
-    
+
     def delete(self, id_partition) -> None:
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" DELETE FROM partition_dd WHERE id_partition = ? """, (id_partition))
+        cursor.execute(
+            """ DELETE FROM partition_dd WHERE id_partition = ? """, (id_partition))
         delete = cursor.commit()
-        cursor.close()
+        con.close()
         return
 
     def selectByLabel(label):
@@ -42,7 +44,7 @@ class PartitionDatabase():
         liste_partition = []
         for i in rs:
             liste_partition.append(Partition(i[1], i[2], i[3]))
-        cursor.close()
+        con.close()
         return liste_partition
     
     def selectByEspaceLibreBetween(min, max):
@@ -54,7 +56,7 @@ class PartitionDatabase():
         liste_partition = []
         for i in rs:
             liste_partition.append(Partition(i[1], i[2], i[3]))
-        cursor.close()
+        con.close()
         return liste_partition
 
     def selectByEspaceUtiliseBetween(min, max):
@@ -66,7 +68,7 @@ class PartitionDatabase():
         liste_partition = []
         for i in rs:
             liste_partition.append(Partition(i[1], i[2], i[3]))
-        cursor.close()
+        con.close()
         return liste_partition
     
     def selectById(id):
@@ -77,7 +79,7 @@ class PartitionDatabase():
         cursor.execute("""SELECT * FROM partition_dd WHERE id_partition=?""", str(id))
         rs = cursor.fetchone()
         rs = Partition(rs[1], rs[2], rs[3])
-        cursor.close()
+        con.close()
         return rs
 
     def selectByIdDisk(id):
@@ -89,5 +91,5 @@ class PartitionDatabase():
         liste_partition = []
         for i in rs:
             liste_partition.append(Partition(i[1], i[2], i[3]))
-        cursor.close()
+        con.close()
         return liste_partition
