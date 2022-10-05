@@ -1,6 +1,8 @@
+import sys
+sys.path.append("./")
 from dataclasses import dataclass
 from classes.database.interfaces.interface_database import IDatabase
-from database import Database
+from classes.database.database import Database
 
 @dataclass
 class SecuriteDatabase(IDatabase):

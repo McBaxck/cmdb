@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-from partition import Partition
+from .partition import Partition
 from typing import List
 
 
 @dataclass
 class HardDisk():
+    """"""
     _label: str
     _goUnusedMemory: int
     _goUsedMemory: int

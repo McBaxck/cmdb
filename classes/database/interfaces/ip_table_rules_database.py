@@ -1,6 +1,8 @@
+import sys
+sys.path.append("./")
 from classes.database.interfaces.interface_database import IDatabase
 from classes.server.config.ip_table_rules import IpTableRules
-from database import Database
+from classes.database.database import Database
 
 class IpTableRulesDatabase(IDatabase):
 

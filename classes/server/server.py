@@ -3,7 +3,7 @@ from typing import List
 from classes.server.config.interface_reseau import InterfaceReseau
 from classes.server.stockage.raid import RAID
 from classes.server.config.securite import Securite
-from dd import HardDisk
+from .stockage.dd import HardDisk
 from abc import ABC
 
 
