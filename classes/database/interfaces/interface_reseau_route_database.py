@@ -1,31 +1,51 @@
-from database import Database
+from classes.database.interfaces.interface_database import IDatabase
+from classes.server.config.interface_reseau_route import InterfaceReseauRoute
+from classes.database.database import Database
 
 
-class InterfaceReseauRouteDatabase():
+class InterfaceReseauRouteDatabase(IDatabase):
 
-    def create(self, values: InterfaceReseauRoute) -> None:
+    def create(self, interfaceReseauRoute: InterfaceReseauRoute, idParent: int) -> None:
         db: Database = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" INSERT INTO interface_reseau_route(id_interface_reseau_route, ip_destination, masque_reseau, ip_interface, ttl, id_interface_reseau) VALUES (?, ?, ?, ?, ?) """, (values))
-        create = cursor.commit()
+        cursor.execute(""" INSERT INTO interface_reseau_route(id_interface_reseau_route, ip_destination, masque_reseau, ip_interface, ttl, id_interface_reseau) VALUES (?, ?, ?, ?, ?) """, (1, interfaceReseauRoute.ipDestination, interfaceReseauRoute.masqueReseau,interfaceReseauRoute.ipInterface, interfaceReseauRoute.ttl, idParent))
+        con.commit()
         return
 
-    def update(self, id_route: int, ip_destination: str, masque_reseau: str, ip_interface: str, ttl: int, id_interface_reseau: int) -> None:
+    def update(self, interfaceReseauRoute: InterfaceReseauRoute) -> None:
+        db: Database = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" UPDATE interface_reseau_route SET label = ?, espace_libre = ?, espace_utilise = ?, id_disque_dur = ? WHERE id_partition = ? """,
-                       (label, espace_libre, espace_utilise, id_disque_dur, id_partition))
-        update = cursor.commit()
+        cursor.execute(""" UPDATE interface_reseau_route SET ip_destination = ?, masque_reseau = ?, ip_interface = ?, ttl = ? WHERE id_interface_reseau_route = ? """,
+                       (interfaceReseauRoute.ipDestination, interfaceReseauRoute.masqueReseau, interfaceReseauRoute.ipInterface, interfaceReseauRoute.ttl, interfaceReseauRoute.id))
+        con.commit()
         return
 
     def delete(self, id_interface_reseau_route: int) -> None:
+        db: Database = Database()
         con = db._open()
         cursor = con.cursor()
         cursor.execute(
             """ DELETE FROM interface_reseau_route WHERE id_interface_reseau_route = ? """, (id_interface_reseau_route))
         delete = cursor.commit()
         return
+
+    def selectAll(self):
+        db = Database()
+        con = db._open()
+        cursor = con.cursor()
+        cursor.execute("""
+        SELECT * FROM interface_reseau_route
+        """)
+        rs = cursor.fetchall()
+        return rs
+
+    def selectById(self, id: int):
+        pass
+
+    def selectLastId(self):
+        pass
 
     def select_by_ip_destination(ip_destination: str):
         db = Database()

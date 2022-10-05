@@ -1,8 +1,7 @@
 import sqlite3
-import logger
 from sqlite3 import Error, Connection
 from dataclasses import dataclass
-from database import DATABASE_PATH
+from classes.database.__init__ import DATABASE_PATH
 
 
 @dataclass

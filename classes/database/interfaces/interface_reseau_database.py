@@ -1,23 +1,24 @@
-from classes.interface_database import IDatabase
+from classes.database.interfaces.interface_database import IDatabase
+from classes.database.interfaces.interface_reseau_route_database import InterfaceReseauRouteDatabase
 from classes.server.config.interface_reseau import InterfaceReseau
-from database import Database
+from classes.database.database import Database
 
 class InterfaceReseauDatabase(IDatabase):
 
-    def create(self, interfaceReseau: InterfaceReseau) -> None:
+    def create(self, interfaceReseau: InterfaceReseau, idServeur: int) -> None:
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" INSERT INTO interface_reseau(id_interface_reseau, ip_source, port, ip_passerelle, id_serveur) VALUES (?, ?, ?, ?, ?) """, (self.selectLastId()+1, interfaceReseau.ipSource, interfaceReseau.port, interfaceReseau.passerelle, interfaceReseau.ipServer))
-        cursor.execute()
+        cursor.execute(""" INSERT INTO interface_reseau(id_interface_reseau, ip_source, port, ip_passerelle, id_serveur) VALUES (?, ?, ?, ?, ?) """, (self.selectLastId()+1, interfaceReseau.ipSource, interfaceReseau.port, interfaceReseau.passerelle, idServeur))
+        con.commit()
         return
     
     def update(self, interfaceReseau: InterfaceReseau) -> None:
         db = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" UPDATE interface_reseau SET ip_source = ?, port = ?, ip_passerelle = ?, id_serveur = ?) WHERE id_interface_reseau = ?""", (interfaceReseau.ipSource, interfaceReseau.port, interfaceReseau.passerelle, interfaceReseau.ipServer, interfaceReseau.idInterfaceReseau))
-        cursor.execute()
+        cursor.execute(""" UPDATE interface_reseau SET ip_source = ?, port = ?, ip_passerelle = ?) WHERE id_interface_reseau = ?""", (interfaceReseau.ipSource, interfaceReseau.port, interfaceReseau.passerelle, interfaceReseau.idInterfaceReseau))
+        con.commit()
         return
     
     def delete(self, interfaceReseau: InterfaceReseau) -> None:
@@ -25,7 +26,7 @@ class InterfaceReseauDatabase(IDatabase):
         con = db._open()
         cursor = con.cursor()
         cursor.execute(""" DELETE FROM interface_reseau WHERE id_interface_reseau = ? """, (interfaceReseau.idInterfaceReseau))
-        cursor.execute()
+        con.commit()
         return
 
     def selectLastId(self) -> int:

@@ -47,3 +47,13 @@ class InterfaceReseauRoute():
     @ttl.setter
     def ttl(self, value: int) -> None:
         self._ttl = value
+
+    @staticmethod
+    def toObject(list: list):
+        i = InterfaceReseauRoute()
+        i.id = list[0]
+        i.ipDestination = list[1]
+        i.masqueReseau = list[2]
+        i.ipInterface = list[3]
+        i.ttl = list[4]
+        return i

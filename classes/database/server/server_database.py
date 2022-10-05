@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from interface_database import IDatabase
+from classes.database.interfaces.interface_database import IDatabase
 from database import Database
 
 @dataclass
