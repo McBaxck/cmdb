@@ -3,4 +3,4 @@ global DATABASE_PATH
 
 
 # Set constants value -----------
-DATABASE_PATH = ''
+DATABASE_PATH = './DB_serveur.db'
