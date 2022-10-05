@@ -1,4 +1,3 @@
-from xmlrpc.client import Server
 from classes.server.config.interface_reseau import InterfaceReseau
 from classes.server.config.interface_reseau_route import InterfaceReseauRoute
 from classes.server.config.ip_table_rules import IpTableRules
@@ -15,6 +14,6 @@ from classes.server.types.vm import VirtualMachine
 from classes.server.server import Server
 
 
-class GenericFactory:
+class GenericFactory():
     def testAll():
         pass
