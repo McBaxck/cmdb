@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from interface_database import IDatabase
+from classes.database.interfaces.interface_database import IDatabase
 from database import Database
 
 @dataclass
@@ -11,6 +11,7 @@ class DisqueDurDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""INSERT INTO Disque_Dur (label, espace_libre, espace_utilise, id_serveur) VALUES(?, ?, ?, ?, ?) ;""", (label, espace_libre, espace_utilise, id_serveur))
         con.commit()
+        cursor.close()
 
 
     def update(self, label: str, espace_libre: int, espace_utilise: int, id_serveur: int) -> None:
@@ -19,6 +20,7 @@ class DisqueDurDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""UPDATE Disque_Dur SET label=?, espace_libre=?, espace_utilise=?, id_serveur=? WHERE id_disque_dur = ? ;""", (label, espace_libre, espace_utilise, id_serveur))
         con.commit()
+        cursor.close()
 
     def delete(self, id_disque_dur: int) -> None:
         db = Database()
@@ -26,6 +28,7 @@ class DisqueDurDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""DELETE FROM Disque_Dur WHERE id_disque_dur=? ;""", (id_disque_dur))
         con.commit()
+        cursor.close()
 
     def selectByLabel(value: str = "") -> list:
         db = Database()
@@ -33,6 +36,7 @@ class DisqueDurDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM Disque_Dur WHERE label = ? ;""", (value))
         label = cursor.fetchall()
+        cursor.close()
         return label
     
     def selectByEspaceLibre(self, valeur_basse: int, valeur_haute: int) -> list:
@@ -41,6 +45,7 @@ class DisqueDurDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM Disque_Dur WHERE espace_libre<=? AND espace_libre >=? ;""", (valeur_basse, valeur_haute))
         espace_libre = cursor.fetchall()
+        cursor.close()
         return espace_libre
 
     def selectByEspaceUtilise(self, valeur_basse: int, valeur_haute: int) -> list:
@@ -49,6 +54,7 @@ class DisqueDurDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM Disque_Dur WHERE espace_utilise<=? AND espace_utilise>=? ;""", (valeur_basse, valeur_haute))
         espace_utilise = cursor.fetchall()
+        cursor.close()
         return espace_utilise
     
     def selectByServer(self, value: str) -> list:
@@ -57,4 +63,5 @@ class DisqueDurDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM Disque_Dur WHERE id_serveur = ? ;""", (value))
         id_serveur = cursor.fetchall()
+        cursor.close()
         return id_serveur
