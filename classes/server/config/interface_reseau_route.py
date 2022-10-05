@@ -7,7 +7,6 @@ class InterfaceReseauRoute():
     _masque_reseau: str
     _ip_interface: str
     _ttl: int
-    _id_interface_reseau: int
 
     @property
     def id(self) -> int:
@@ -29,10 +28,6 @@ class InterfaceReseauRoute():
     def ttl(self) -> int:
         return self._ttl
 
-    @property
-    def idInterfaceReseau(self) -> int:
-        return self._id_interface_reseau
-
     @id.setter
     def id(self, value: int) -> None:
         self._id_interface_reseau_route = value
@@ -52,7 +47,3 @@ class InterfaceReseauRoute():
     @ttl.setter
     def ttl(self, value: int) -> None:
         self._ttl = value
-
-    @idInterfaceReseau.setter
-    def idInterfaceReseau(self, value: int) -> None:
-        self._idInterfaceReseau = value

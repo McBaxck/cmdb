@@ -1,5 +1,5 @@
-from classes.classe_database.interface_database import IDatabase
-from classes.ip_table_rules import IpTableRules
+from classes.database.interfaces.interface_database import IDatabase
+from classes.server.config.ip_table_rules import IpTableRules
 from database import Database
 
 class IpTableRulesDatabase(IDatabase):

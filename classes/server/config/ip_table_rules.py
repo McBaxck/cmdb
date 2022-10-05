@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from classes.server.config.policy import Policy
+
 @dataclass
 class IpTableRules():
     _id: int
@@ -8,8 +10,7 @@ class IpTableRules():
     _port: int
     _protocol: str
     _option: list
-    _iptable_policy: str
-    _id_securite: int
+    _iptable_policy: Policy
     
     def __post_init__(self) -> None:
         if type(self._option) == str:
@@ -41,12 +42,8 @@ class IpTableRules():
         return self._option
 
     @property
-    def iptablePolicy(self) -> str:
+    def iptablePolicy(self) -> Policy:
         return self._iptable_policy
-
-    @property
-    def idSecurite(self) -> int:
-        return self._id_securite
 
     @id.setter
     def id(self, value: int) -> None:
@@ -74,12 +71,8 @@ class IpTableRules():
         self._option = value
 
     @iptablePolicy.setter
-    def iptablePolicy(self, value: str) -> None:
+    def iptablePolicy(self, value: Policy) -> None:
         self._iptable_policy = value
-
-    @idSecurite.setter
-    def idSecurite(self, value: int) -> None:
-        self._id_securite = value
 
     def option_append(self, value: str) -> None:
         """permet d'ajouter une valeur dans le tableau option

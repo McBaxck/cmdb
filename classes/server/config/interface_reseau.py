@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+from typing import List
+
+from classes.server.config.interface_reseau_route import InterfaceReseauRoute
 
 
 @dataclass
@@ -7,7 +10,7 @@ class InterfaceReseau():
     _ipSource: str
     _port: int
     _passerelle: str
-    _idServer: int
+    _interface_reseau_route: List[InterfaceReseauRoute]
 
     @property
     def idInterfaceReseau(self) -> int:
@@ -26,8 +29,8 @@ class InterfaceReseau():
         return self._passerelle
 
     @property
-    def idServer(self) -> int:
-        return self._idServer
+    def interfaceReseauRoute(self) -> List[InterfaceReseauRoute]:
+        return self._interface_reseau_route
 
     @idInterfaceReseau.setter
     def idInterfaceReseau(self, value: int) -> None:
@@ -45,6 +48,6 @@ class InterfaceReseau():
     def passerelle(self, value: str) -> None:
         self._passerelle = value
 
-    @idServer.setter
-    def ipServer(self, value: int) -> None:
-        self._idServer = value
+    @interfaceReseauRoute.setter
+    def interfaceReseauRoute(self, value: List[InterfaceReseauRoute]) -> None:
+        self._interface_reseau_route = value

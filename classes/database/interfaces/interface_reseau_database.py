@@ -1,5 +1,5 @@
 from classes.interface_database import IDatabase
-from classes.interface_reseau import InterfaceReseau
+from classes.server.config.interface_reseau import InterfaceReseau
 from database import Database
 
 class InterfaceReseauDatabase(IDatabase):

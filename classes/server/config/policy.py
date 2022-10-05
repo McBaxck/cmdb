@@ -2,4 +2,8 @@ import enum
 
 
 class Policy(enum.Enum):
-    pass
+    ACCEPT="ACCEPT",
+    DENIED="DENIED",
+    LOG="LOG",
+    DROP="DROP",
+    ALLOWED="ALLOWED"

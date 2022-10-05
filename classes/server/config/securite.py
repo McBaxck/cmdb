@@ -1,18 +1,19 @@
 from dataclasses import dataclass
+from typing import List
 from ip_table_rules import IpTableRules
 
 @dataclass
 class Securite():
     _id: int
     _ipFireWall: str
-    _list_ip_table: list
+    _list_ip_table: List[IpTableRules]
 
     @property
     def ipFireWall(self) -> str:
         return self._ipFireWall
 
     @property
-    def list_ip_table(self) -> list:
+    def list_ip_table(self) -> List[IpTableRules]:
         return self._list_ip_table
 
     @ipFireWall.setter
