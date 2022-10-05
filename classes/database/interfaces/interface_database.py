@@ -2,7 +2,9 @@ from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from typing import Any
 
-
+"""_summary_
+    Interface CRUD
+"""
 @dataclass
 class IDatabase(ABC):
 

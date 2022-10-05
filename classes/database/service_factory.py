@@ -3,10 +3,12 @@ from dataclasses import dataclass
 from classes.database.interfaces.ip_table_rules_database import IpTableRulesDatabase
 from classes.database.interfaces.interface_reseau_database import InterfaceReseauDatabase
 from classes.database.securite_database import SecuriteDatabase
-
 from classes.database.server.server_database import ServerDatabase
 
-
+"""_summary_
+    Permet de mettre en oeuvre le design pattern singleton afin d'assurer l'unicité de l'instance des objets suivants définis
+    afin d'éviter les collisions durant l'accès à la base de données
+"""
 @dataclass
 class ServiceFactory:
     database: Database
