@@ -30,9 +30,9 @@ def create_server(conn, task):
 def create_disque_dur(conn,task):
     try:
         c=conn.cursor()
-        sql = '''INSERT INTO Disque_Dur(id_disque_dur,label,espace_libre,format_disque,id_serveur) VALUES (?,?,?,?,?,?);'''
+        sql = '''INSERT INTO Disque_Dur(id_disque_dur,label,espace_libre,espace_utilise,format_disque,id_serveur) VALUES (?,?,?,?,?,?);'''
         c.execute(sql,task)
-        c.commit
+        conn.commit
     except Error as e:
         print(e)
 
@@ -48,7 +48,7 @@ def create_partition_dd(conn,task):
 def create_interface_reseau(conn,task):
     try:
         c= conn.cursor()
-        sql = '''INSERT INTO Interface_reseau(id_interface_reseau,ip_source,port,ip_passerelle,id_serveur) VALUES (?,?,?,?,?);'''
+        sql = '''INSERT INTO Interface_Reseau(id_interface_reseau,ip_source,port,ip_passerelle,id_serveur) VALUES (?,?,?,?,?);'''
         c.execute(sql,task)
         conn.commit()
     except Error as e:
@@ -57,7 +57,7 @@ def create_interface_reseau(conn,task):
 def create_interface_Reseau_Route(conn,task):
     try:
         c=conn.cursor()
-        sql='''INSERT INTO Interface_Reseau_Route(id_route,ip_destination,maque_reseau,ip_interface,ttl,id_interface_reseau) VALUES (?,?,?,?,?,?);'''
+        sql='''INSERT INTO Interface_Reseau_Route(id_route,ip_destination,masque_reseau,ip_interface,ttl,id_interface_reseau) VALUES (?,?,?,?,?,?);'''
         c.execute(sql,task)
         conn.commit()
     except Error as e:
@@ -93,8 +93,8 @@ def create_iptables_rules(conn,task):
 def create_iptables_rules_option(conn,task):
     try:
         c = conn.cursor()
-        sql='''INSERT INTO IPTable_Rules_Option(id_iptable_rules_option,iptable_option) VALUES (?,?)'''
-        c.execute(conn,task)
+        sql='''INSERT INTO IPTable_Rules_Option(id_iptables_rules_option,iptable_option) VALUES (?,?)'''
+        c.execute(sql,task)
         conn.commit()
     except Error as e:
         print(e)
@@ -102,12 +102,29 @@ def create_iptables_rules_option(conn,task):
 def create_iptable_rules_iptable_rules_option(conn,task):
     try:
         c = conn.cursor()
-        sql='''INSERT INTO iptable_options(id_iptable_rules,id_iptable_rules_option) VALUES(?,?)'''
-        c.execute(conn,task)
+        sql='''INSERT INTO iptable_options(id_iptable_rules,id_iptables_rules_option) VALUES(?,?)'''
+        c.execute(sql,task)
         conn.commit()
     except Error as e:
         print(e)
 
+def create_raid(conn,task):
+    try:
+        c = conn.cursor()
+        sql = '''INSERT INTO RAID(id_raid,label) VALUES (?,?)'''
+        c.execute(sql,task)
+        conn.commit()
+    except Error as e:
+        print(e)
+
+def create_serveur_raid(conn,task):
+    try:
+        c = conn.cursor()
+        sql = '''INSERT INTO serveur_raid(id_serveur,id_raid) VALUES (?,?)'''
+        c.execute(sql,task)
+        conn.commit()
+    except Error as e:
+        print(e)
 if __name__ == '__main__' :
     conn = create_connection(r'./Db_serveur.db')
     sql_create_table_Serveur = """  CREATE TABLE Serveur(
@@ -164,12 +181,12 @@ if __name__ == '__main__' :
                                                 );
                                                 """
     sql_create_table_interface_reseau="""CREATE TABLE Interface_Reseau(
-                                        id_interface_firewall INTEGER,
+                                        id_interface_reseau INTEGER,
                                         ip_source TEXT NOT NULL,
                                         port INTEGER NOT NULL,
                                         ip_passerelle TEXT NOT NULL,
                                         id_serveur INTEGER NOT NULL,
-                                        PRIMARY KEY(id_interface_firewall),
+                                        PRIMARY KEY(id_interface_reseau),
                                         FOREIGN KEY(id_serveur) REFERENCES Serveur(id_serveur)
                                         );"""
 
@@ -179,9 +196,9 @@ if __name__ == '__main__' :
                                 masque_reseau TEXT NOT NULL,
                                 ip_interface TEXT NOT NULL,
                                 ttl INTEGER,
-                                id_interface_firewall INTEGER NOT NULL,
+                                id_interface_reseau INTEGER NOT NULL,
                                 PRIMARY KEY(id_route),
-                                FOREIGN KEY(id_interface_firewall) REFERENCES Interface_Reseau(id_interface_firewall)
+                                FOREIGN KEY(id_interface_reseau) REFERENCES Interface_Reseau(id_interface_reseau)
                                 );
                             """
     sql_create_table_raid = """CREATE TABLE RAID(
@@ -246,3 +263,98 @@ if __name__ == '__main__' :
         create_partition_dd(conn,(9,'sda2',75,110,4))
         create_partition_dd(conn,(10,'sda1',75,170,4))
         create_partition_dd(conn,(11,'sda1',245,120,5))
+        create_interface_reseau(conn,(1,'192.168.0.1',80,'10.0.0.2',1))
+        create_interface_reseau(conn,(2,'192.168.0.2',20,'10.0.0.2',1))
+        create_interface_reseau(conn,(3,'192.168.0.3',120,'10.0.0.2',2))
+        create_interface_reseau(conn,(4,'192.168.0.4',213,'10.0.0.16',3))
+        create_interface_reseau(conn,(5,'192.168.0.5',120,'10.0.0.15',3))
+        create_interface_Reseau_Route(conn,(1,'192.168.0.1','255.255.255.0','192.168.0.2',255,1))
+        create_interface_Reseau_Route(conn,(2,'192.168.0.1','255.255.255.0','192.168.0.2',120,1))
+        create_interface_Reseau_Route(conn,(3,'192.168.0.1','255.255.255.0','192.168.0.2',255,2))
+        create_interface_Reseau_Route(conn,(4,'192.168.0.2','255.255.255.0','192.168.0.1',60,2))
+        create_interface_Reseau_Route(conn,(5,'192.168.0.2','255.255.255.0','192.168.0.1',60,2))
+        create_interface_Reseau_Route(conn,(6,'192.168.0.3','255.255.255.0','192.168.0.3',120,3))
+        create_interface_Reseau_Route(conn,(7,'192.168.0.2','255.255.255.0','192.168.0.2',120,3))
+        create_interface_Reseau_Route(conn,(8,'192.168.0.2','255.255.255.0','192.168.0.3',255,4))
+        create_interface_Reseau_Route(conn,(9,'192.168.0.2','255.255.255.0','192.168.0.1',120,5))
+        create_interface_Reseau_Route(conn,(10,'192.168.0.3','255.255.255.0','192.168.0.1',255,5))
+        create_securite(conn,(1,'10.0.0.2'))
+        create_securite(conn,(2,'192.168.0.7'))
+        create_securite(conn,(3,'192.68.25.1'))
+        create_securite(conn,(4,'192.168.2.18'))
+        create_securite(conn,(5,'192.168.2.17'))
+        create_securite(conn,(6,'192.168.2.30'))
+        create_securite(conn,(7,'10.0.0.3'))
+        create_securite(conn,(8,'10.0.0.4'))
+        create_securite(conn,(9,'10.0.0.5'))
+        create_serveur_securite(conn,(1,1))
+        create_serveur_securite(conn,(1,3))
+        create_serveur_securite(conn,(1,4))
+        create_serveur_securite(conn,(1,6))
+        create_serveur_securite(conn,(1,9))
+        create_serveur_securite(conn,(2,2))
+        create_serveur_securite(conn,(2,1))
+        create_serveur_securite(conn,(2,4))
+        create_serveur_securite(conn,(2,5))
+        create_serveur_securite(conn,(2,8))
+        create_serveur_securite(conn,(2,7))
+        create_serveur_securite(conn,(3,2))
+        create_serveur_securite(conn,(3,5))
+        create_serveur_securite(conn,(3,6))
+        create_serveur_securite(conn,(3,9))
+        create_serveur_securite(conn,(3,8))
+        create_serveur_securite(conn,(3,3))
+        create_serveur_securite(conn,(3,1))
+        create_iptables_rules(conn,(1,'192.168.0.1',80,'http','DENIED',1))
+        create_iptables_rules(conn,(2,'192.168.0.1',20,'tcp','ALLOWED',2))
+        create_iptables_rules(conn,(3,'192.168.0.1',3000,'udp','ALLOWED',3))
+        create_iptables_rules(conn,(4,'192.168.0.1',120,'udp','DENIED',4))
+        create_iptables_rules(conn,(5,'192.168.0.2',80,'http','ALLOWED',5))
+        create_iptables_rules(conn,(6,'192.168.0.3',80,'http','ACCEPT',6))
+        create_iptables_rules(conn,(7,'192.168.0.3',120,'udp','DENIED',7))
+        create_iptables_rules(conn,(8,'192.168.0.3',130,'udp','LOG',8))
+        create_iptables_rules(conn,(9,'192.168.0.3',30001,'tcp','ACCEPT',9))
+        create_iptables_rules(conn,(10,'192.168.0.3',30002,'tcp','DENIED',2))
+        create_iptables_rules(conn,(11,'192.168.0.3',18,'udp','ACCEPT',4))
+        create_iptables_rules(conn,(12,'192.168.0.4',120,'http','DROP',6))
+        create_iptables_rules(conn,(13,'192.168.0.5',16,'http','DENIED',8))
+        create_iptables_rules(conn,(14,'192.168.0.6',152,'udp','LOG',7))
+        create_iptables_rules(conn,(15,'192.168.0.6',184,'tcp','ACCEPT',9))
+        create_iptables_rules_option(conn,(1,'--'))
+        create_iptables_rules_option(conn,(2,'ok'))
+        create_iptables_rules_option(conn,(3,'ko'))
+        create_iptable_rules_iptable_rules_option(conn,(1,1))
+        create_iptable_rules_iptable_rules_option(conn,(1,3))
+        create_iptable_rules_iptable_rules_option(conn,(1,2))
+        create_iptable_rules_iptable_rules_option(conn,(2,2))
+        create_iptable_rules_iptable_rules_option(conn,(2,1))
+        create_iptable_rules_iptable_rules_option(conn,(2,3))
+        create_iptable_rules_iptable_rules_option(conn,(3,2))
+        create_iptable_rules_iptable_rules_option(conn,(3,1))
+        create_iptable_rules_iptable_rules_option(conn,(4,1))
+        create_iptable_rules_iptable_rules_option(conn,(5,1))
+        create_iptable_rules_iptable_rules_option(conn,(6,1))
+        create_iptable_rules_iptable_rules_option(conn,(7,1))
+        create_iptable_rules_iptable_rules_option(conn,(8,3))
+        create_iptable_rules_iptable_rules_option(conn,(9,3))
+        create_iptable_rules_iptable_rules_option(conn,(10,3))
+        create_iptable_rules_iptable_rules_option(conn,(11,3))
+        create_iptable_rules_iptable_rules_option(conn,(12,2))
+        create_iptable_rules_iptable_rules_option(conn,(13,2))
+        create_iptable_rules_iptable_rules_option(conn,(14,2))
+        create_iptable_rules_iptable_rules_option(conn,(15,1))
+        create_raid(conn,(1,'RAID-0'))
+        create_raid(conn,(2,'RAID-1'))
+        create_raid(conn,(3,'RAID-2'))
+        create_raid(conn,(4,'RAID-5'))
+        create_raid(conn,(5,'RAID-6'))
+        create_serveur_raid(conn,(1,1))
+        create_serveur_raid(conn,(1,4))
+        create_serveur_raid(conn,(1,2))
+        create_serveur_raid(conn,(1,5))
+        create_serveur_raid(conn,(2,1))
+        create_serveur_raid(conn,(2,5))
+        create_serveur_raid(conn,(2,4))
+        create_serveur_raid(conn,(2,3))
+        create_serveur_raid(conn,(3,1))
+        create_serveur_raid(conn,(3,2))
