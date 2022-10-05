@@ -8,11 +8,17 @@ class IpTableRules():
     _port: int
     _protocol: str
     _option: list
+    _iptable_policy: str
+    _id_securite: int
     
     def __post_init__(self) -> None:
         if type(self._option) == str:
             self._option = [self._option]
             print(self._option)
+
+    @property
+    def id(self) -> int:
+        return self._id
 
     @property
     def ip_source(self) ->str:
@@ -33,6 +39,18 @@ class IpTableRules():
     @property
     def option(self) ->list:
         return self._option
+
+    @property
+    def iptablePolicy(self) -> str:
+        return self._iptable_policy
+
+    @property
+    def idSecurite(self) -> int:
+        return self._id_securite
+
+    @id.setter
+    def id(self, value: int) -> None:
+        self._id = value
 
     @ip_source.setter
     def ip_source(self, value: str) -> None:
@@ -55,6 +73,14 @@ class IpTableRules():
         print(type(value))
         self._option = value
 
+    @iptablePolicy.setter
+    def iptablePolicy(self, value: str) -> None:
+        self._iptable_policy = value
+
+    @idSecurite.setter
+    def idSecurite(self, value: int) -> None:
+        self._id_securite = value
+
     def option_append(self, value: str) -> None:
         """permet d'ajouter une valeur dans le tableau option
 
@@ -73,4 +99,3 @@ class IpTableRules():
             self._option.remove(value)
         except ValueError:
             pass
-
