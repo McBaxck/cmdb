@@ -1,12 +1,13 @@
 from database import Database
 
 
-class InterfaceReseauRoute():
+class InterfaceReseauRouteDatabase():
 
-    def create(self, values) -> None:
+    def create(self, values: InterfaceReseauRoute) -> None:
+        db: Database = Database()
         con = db._open()
         cursor = con.cursor()
-        cursor.execute(""" INSERT INTO interface_reseau_route(id_interface_reseau_route, ip_destination, masque_reseau, ip_interface, ttl, id_interface_reseau) VALUES (?, ?, ?, ?, ?) """, (value))
+        cursor.execute(""" INSERT INTO interface_reseau_route(id_interface_reseau_route, ip_destination, masque_reseau, ip_interface, ttl, id_interface_reseau) VALUES (?, ?, ?, ?, ?) """, (values))
         create = cursor.commit()
         return
 
