@@ -2,6 +2,9 @@ from classes.interface_database import IDatabase
 from classes.server.config.interface_reseau import InterfaceReseau
 from database import Database
 
+"""_summary_
+    classe CRUD qui est implémenté à partir d'InterfaceDatabase
+"""
 class InterfaceReseauDatabase(IDatabase):
 
     def create(self, interfaceReseau: InterfaceReseau) -> None:

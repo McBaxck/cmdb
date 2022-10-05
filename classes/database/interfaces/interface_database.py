@@ -4,6 +4,7 @@ from typing import Any
 
 """_summary_
     Interface CRUD
+    interface de liaison par défaut à la base de données
 """
 @dataclass
 class IDatabase(ABC):

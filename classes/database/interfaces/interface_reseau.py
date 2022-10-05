@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
-
+"""_summary_
+    classe CRUD qui est implémenté à partir d'InterfaceDatabase
+"""
 @dataclass
 class InterfaceReseau():
     _idInterfaceReseau: int

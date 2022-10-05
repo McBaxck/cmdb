@@ -2,6 +2,9 @@ from classes.database.interfaces.interface_database import IDatabase
 from classes.server.config.ip_table_rules import IpTableRules
 from database import Database
 
+"""_summary_
+    classe CRUD qui est implémenté à partir d'InterfaceDatabase
+"""
 class IpTableRulesDatabase(IDatabase):
 
     def create(self, ipTableRules: IpTableRules) -> None:
