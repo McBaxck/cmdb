@@ -82,7 +82,7 @@ def add_raid(raid_name, disk):
 
 
 @app.route(f'{BASE_URI}/delete_raid/<raid_name>/<disk>', methods=['DELETE'])
-def delete_raid(raid_name, disk):
+def delete_raid_from_disk(raid_name, disk):
     return 'put /delete_raid/'
 
 
@@ -92,7 +92,7 @@ def add_network_interface(server, ip_adress, default_gateway, routing_table, int
 
 
 @app.route(f'{BASE_URI}/del_network_interface/<interface_name>', methods=['DELETE'])
-def add_network_interface(interface_name):
+def delete_network_interface(interface_name):
     return 'put /del_network_interface/'
 
 
