@@ -4,12 +4,14 @@ from classes.database.interfaces.interface_reseau_route_database import Interfac
 from classes.database.interfaces.ip_table_rules_database import IpTableRulesDatabase
 from classes.database.interfaces.interface_reseau_database import InterfaceReseauDatabase
 from classes.database.securite_database import SecuriteDatabase
-
 from classes.database.server.server_database import ServerDatabase
 from classes.database.stockage.hard_disk_database import DisqueDurDatabase
 from classes.database.stockage.partition_database import PartitionDatabase
 
-
+"""_summary_
+    Permet de mettre en oeuvre le design pattern singleton afin d'assurer l'unicité de l'instance des objets suivants définis
+    afin d'éviter les collisions durant l'accès à la base de données
+"""
 @dataclass
 class ServiceFactory:
     database: Database = None
