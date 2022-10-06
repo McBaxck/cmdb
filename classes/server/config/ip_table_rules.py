@@ -2,6 +2,21 @@ from dataclasses import dataclass
 
 from classes.server.config.policy import Policy
 
+"""_summary_
+
+    Attributs :
+        _id: int
+        _ip_source: str
+        _ip_destination: str
+        _port: int
+        _protocol: str
+        _option: list
+        _iptable_policy: Policy
+
+    Méthodes : 
+@invariant: policy enum value(ACCEPT="ACCEPT",DENIED="DENIED",LOG="LOG",DROP="DROP","ALLOWED")
+
+"""
 @dataclass
 class IpTableRules():
     _id: int
