@@ -6,7 +6,7 @@ from classes.server.config.securite import Securite
 from .stockage.dd import HardDisk
 from abc import ABC
 
-    """_summary_
+"""_summary_
 
     Attributs :
         _label: str
