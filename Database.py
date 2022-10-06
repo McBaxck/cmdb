@@ -1,7 +1,9 @@
 import sqlite3
 from sqlite3 import Error
 
+# Script d'initialisation de la base de données
 
+#Fonction de création de connection à la bdd SQLite
 def create_connection(db_file):
     conn = None
     try:
@@ -11,6 +13,10 @@ def create_connection(db_file):
     
     return conn
 
+#Fonction de création de table dans la bdd
+#@params :
+#   conn : connecteur à la bdd
+#   script_sql : script de la création de la table
 def create_tables(conn, script_sql):
     try:
         c = conn.cursor()
@@ -18,6 +24,10 @@ def create_tables(conn, script_sql):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table serveur
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du serveur à ajouter 
 def create_server(conn, task):
     try:
         c = conn.cursor()
@@ -27,6 +37,10 @@ def create_server(conn, task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table disque_dur
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du disque_dur à ajouter
 def create_disque_dur(conn,task):
     try:
         c=conn.cursor()
@@ -36,6 +50,11 @@ def create_disque_dur(conn,task):
     except Error as e:
         print(e)
 
+
+#Fonctin de création d'un serveur dans la table disque_dur
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du disque_dur à ajouter
 def create_partition_dd(conn,task):
     try:
         c = conn.cursor()
@@ -45,6 +64,10 @@ def create_partition_dd(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table interface_reseau
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du interface_reseau à ajouter
 def create_interface_reseau(conn,task):
     try:
         c= conn.cursor()
@@ -54,6 +77,10 @@ def create_interface_reseau(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table interface_reseau
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du interface_reseau à ajouter
 def create_interface_Reseau_Route(conn,task):
     try:
         c=conn.cursor()
@@ -63,6 +90,10 @@ def create_interface_Reseau_Route(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table securite
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du securite à ajouter
 def create_securite(conn,task):
     try:
         c= conn.cursor()
@@ -72,6 +103,10 @@ def create_securite(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table serveur_securite
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du serveur_securite à ajouter
 def create_serveur_securite(conn,task):
     try:
         c=conn.cursor()
@@ -81,6 +116,10 @@ def create_serveur_securite(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table iptables_rules
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du iptables_rules à ajouter
 def create_iptables_rules(conn,task):
     try:
         c = conn.cursor()
@@ -90,6 +129,10 @@ def create_iptables_rules(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table iptables_rules_option
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du iptables_rules_option à ajouter
 def create_iptables_rules_option(conn,task):
     try:
         c = conn.cursor()
@@ -99,6 +142,10 @@ def create_iptables_rules_option(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table iptable_rules_iptable_rules_option
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du iptable_rules_iptable_rules_option à ajouter
 def create_iptable_rules_iptable_rules_option(conn,task):
     try:
         c = conn.cursor()
@@ -108,6 +155,10 @@ def create_iptable_rules_iptable_rules_option(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table create_raid
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du create_raid à ajouter
 def create_raid(conn,task):
     try:
         c = conn.cursor()
@@ -117,6 +168,10 @@ def create_raid(conn,task):
     except Error as e:
         print(e)
 
+#Fonctin de création d'un serveur dans la table serveur_raid
+#@params :
+#   conn : connecteur à la bdd
+#   task:  Valeur des paramètres du serveur_raid à ajouter
 def create_serveur_raid(conn,task):
     try:
         c = conn.cursor()
@@ -125,8 +180,14 @@ def create_serveur_raid(conn,task):
         conn.commit()
     except Error as e:
         print(e)
+
+#Main
 if __name__ == '__main__' :
+    # Création de la connection à la bdd
     conn = create_connection(r'./Db_serveur.db')
+
+
+    #Script de création des différentes tables 
     sql_create_table_Serveur = """  CREATE TABLE Serveur(
                                     id_serveur INTEGER,
                                     label TEXT NOT NULL,
@@ -231,6 +292,8 @@ if __name__ == '__main__' :
                                         FOREIGN KEY(id_raid) REFERENCES RAID(id_raid)
                                         );
                                     """
+
+    #Création des tables et des données dans les tables (cf. documentation -> fichier jeu de données)
     if conn is not None:
         create_tables(conn,sql_create_table_Serveur)
         create_tables(conn,sql_create_table_dd)
