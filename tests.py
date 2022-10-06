@@ -5,17 +5,10 @@ from classes.server.server import Server
 from classes.server.stockage.dd import HardDisk
 from classes.server.stockage.partition import Partition
 from classes.server.stockage.raid import RAID
-from classes.database.stockage.hard_disk_database import DisqueDurDatabase
-from classes.database.stockage.partition_database import PartitionDatabase
-from classes.database.server.server_database import ServerDatabase
+from classes.database.service_factory import ServiceFactory
 
-dd_db = DisqueDurDatabase()
-partition_db = PartitionDatabase()
-serveur_db = ServerDatabase()
 
-dd_recup = dd_db.selectById(1)
-
-dd_recup
+dd_recup = ServiceFactory.getDisqueDurDatabase.selectById(1)
 
 raid = RAID.RAID_5
 part1 = Partition("sda1",10,15)
