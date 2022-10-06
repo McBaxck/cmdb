@@ -1,0 +1,162 @@
+@startuml Classe FSI
+
+abstract Serveur {
+    - string label
+    - int moRam
+    - string cpu
+    - string gpu
+    - string hostname
+}
+
+class Physique {}
+
+class VM {}
+
+class ServiceFactory {
+    - Database database
+    - ServeurDatabase ServeurDatabase
+    - DisqueDurDatabase disqueDurDatabase
+    - InterfaceReseauDatabase interfaceReseauDatabase
+    - SecuriteDatabase securiteDatabase
+    - IpTableRulesDatabase ipTableRulesDatabase
+    - InterfaceReseauRouteDatabase interfaceReseauRouteDatabase
+    - PartitionDatabase partitionDatabase
+}
+
+class DD {
+    - string label
+    - int goEspaceLibre
+    - int goESpaceUtilise
+    - string formatDisque
+}
+
+class Partition {
+    - string label
+    - int goEspaceLibre
+    - int goEspaceUtilise
+}
+
+class InterfaceReseau {
+    - string ipSource
+    - int port
+    - string passerelle
+}
+
+class IpTableRules {
+    - string ipSource
+    - string ipDestination
+    - int port
+    - string protocol
+    - string[] options
+}
+
+class InterfaceReseauRoute {
+    - string ipDestination
+    - string masqueReseau
+    - string ipPasserrelle
+    - string ipInterface
+    - int TTL
+}
+
+class Securite {
+    - string ipFirewall
+}
+
+class Database {
+    - string path
+    --
+    + Connection: open()
+    + void: init()
+}
+
+interface InterfaceDatabase {
+    --
+    + T: create(T)
+    + T: update(T)
+    + void: delete(T)
+    + T[]: selectAll()
+    + T: selectById(int)
+    + int: selectLastId()
+}
+
+class ServeurDatabase {
+    + Serveur[]: selectByLabel(string)
+    + Serveur[]: selectByHostname(string)
+}
+
+class DisqueDurDatabase {
+    --
+    + DisqueDur[]: selectByLabel(string)
+    + DisqueDur[]: selectByEspaceLibreBetween(int, int)
+    + DisqueDur[]: selectByEspaceUtiliseBetween(int, int)
+    + DisqueDur[]: selectByServeur(int)
+}
+
+class PartitionDatabase {
+    --
+    + Partition[]: selectByLabel(string)
+    + Partition[]: selectByEspaceLibreBetween(int, int)
+    + Partition[]: selectByEspaceUtiliseBetween(int, int)
+    + Partition[]: selectByDisqueDur(int)
+}
+
+class InterfaceReseauDatabase {
+    --
+    + InterfaceReseau[]: selectByIpSource(string)
+    + InterfaceReseau[]: selectByPort(int)
+    + InterfaceReseau[]: selectByPasserelle(string)
+    + InterfaceReseau[]: selectByServeur(Serveur)
+}
+
+class SecuriteDatabase {
+    --
+    + Securite[]: selectByIpFirewall(string)
+    + Securite[]: selectByServeur(Serveur)
+}
+
+class IpTableRulesDatabase {
+    --
+    + IpTableRules[]: selectByIpSource(string)
+    + IpTableRules[]: selectByIpDestination(string)
+    + IpTableRules[]: selectByPort(int)
+    + IpTableRules[]: selectByProtocol(string)
+    + IpTableRules[]: selectByOption(string)
+    + IpTableRules[]: selectByOptions(string[])
+    + IpTableRules[]: selectBySecurite(Securite)
+}
+
+class InterfaceReseauRouteDatabase {
+    --
+    + InterfaceReseauRoute[]: selectByIpDestination(string)
+    + InterfaceReseauRoute[]: selectByMasqueReseau(string)
+    + InterfaceReseauRoute[]: selectByIpPasserelle(string)
+    + InterfaceReseauRoute[]: selectByIpInterface(string)
+    + InterfaceReseauRoute[]: selectByInterfaceReseau(InterfaceReseau)
+}
+
+enum RAID {
+}
+
+enum IPTablePolicy {
+}
+
+Physique --> Serveur
+VM --> Serveur
+InterfaceReseau *-- Serveur
+Partition *-- DD
+DD *-- Serveur
+RAID o-- DD
+IpTableRules *-- Securite
+Securite o-- Serveur
+InterfaceReseau --* InterfaceReseauRoute
+IpTableRules --o IPTablePolicy
+
+InterfaceDatabase <|. ServeurDatabase
+InterfaceDatabase <|. PartitionDatabase
+InterfaceDatabase <|.. DisqueDurDatabase
+InterfaceDatabase <|.. SecuriteDatabase
+InterfaceDatabase <|.. InterfaceReseauRouteDatabase
+InterfaceDatabase <|... IpTableRulesDatabase
+InterfaceDatabase <|... InterfaceReseauDatabase
+
+@enduml
