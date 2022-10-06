@@ -1,6 +1,8 @@
+import sys
+sys.path.append("./")
 from classes.database.interfaces.interface_database import IDatabase
 from classes.server.config.ip_table_rules import IpTableRules
-from database import Database
+from classes.database.database import Database
 
 class IpTableRulesDatabase(IDatabase):
 
@@ -10,6 +12,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute(""" INSERT INTO IPTable_rules(id_iptable_rules, ip_destination, port, protocole, iptable_policy, id_securite) VALUES (?, ?, ?, ?, ?) """, (self.selectLastId()+1, ipTableRules.ip_destination, ipTableRules.port, ipTableRules.protocol, ipTableRules.idSecurite))
         cursor.execute()
+        con.close()
         return
     
     def update(self, ipTableRules: IpTableRules) -> None:
@@ -18,6 +21,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute(""" UPDATE iptable_rules SET ip_destination = ?, port = ?, protocole = ?, iptable_policy = ?, id_securite = ?) WHERE id_interface_reseau = ?""", (ipTableRules.ip_destination, ipTableRules.port, ipTableRules.protocol, ipTableRules.idSecurite, ipTableRules.id))
         cursor.execute()
+        con.close()
         return
     
     def delete(self, ipTablesRules: IpTableRules) -> None:
@@ -26,6 +30,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute(""" DELETE FROM iptable_rules WHERE id_iptable_rules = ? """, (ipTablesRules.id))
         cursor.execute()
+        con.close()
         return
 
     def selectLastId(self) -> int:
@@ -34,6 +39,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT ipr.id_iptable_rules FROM iptable_rules AS ipr ORDER BY ipr.id_iptable_rules DESC LIMIT 0,1""")
         rs = cursor.fetchone()
+        con.close()
         return rs
 
     def selectAll(self):
@@ -42,6 +48,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM iptable_rules""")
         rs = cursor.fetchall()
+        con.close()
         return rs
 
     def selectById(id: int) -> IpTableRules:
@@ -50,6 +57,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM iptable_rules AS ipr WHERE ipr.id_iptable_rules = ?""", (id))
         rs = cursor.fetchone()
+        con.close()
         return rs
 
     def selectByIpDestination(ipDestination: str) -> list:
@@ -58,6 +66,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM iptable_rules AS ipr WHERE ipr.ip_destination = ?""", (ipDestination))
         rs = cursor.fetchall()
+        con.close()
         return rs
     
     def selectByPort(port: int) -> list:
@@ -66,6 +75,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM iptable_rules AS ipr WHERE ipr.port = ?""", (port))
         rs = cursor.fetchall()
+        con.close()
         return rs
     
     def selectByProtocole(protocole: str) -> list:
@@ -74,6 +84,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM iptable_rules AS ipr WHERE ipr.protocole = ?""", (protocole))
         rs = cursor.fetchall()
+        con.close()
         return rs
     
     def selectByPolicy(ipTablePolicy: str) -> list:
@@ -82,6 +93,7 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM iptable_rules AS ipr WHERE ipr.iptable_policy = ?""", (ipTablePolicy))
         rs = cursor.fetchall()
+        con.close()
         return rs
     
     def selectByOption(option: str) -> list:
@@ -94,6 +106,7 @@ class IpTableRulesDatabase(IDatabase):
             )
         )""", (option))
         rs = cursor.fetchall()
+        con.close()
         return rs
     
     def selectByOptions(options: list) -> list:
@@ -106,6 +119,7 @@ class IpTableRulesDatabase(IDatabase):
             )
         )""", (options))
         rs = cursor.fetchall()
+        con.close()
         return rs
     
     def selectBySecurite(idSecurite: int) -> list:
@@ -114,4 +128,5 @@ class IpTableRulesDatabase(IDatabase):
         cursor = con.cursor()
         cursor.execute("""SELECT * FROM iptable_rules AS ipr WHERE ipr.id_securite = ?""", (idSecurite))
         rs = cursor.fetchall()
+        con.close()
         return rs

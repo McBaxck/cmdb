@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from ip_table_rules import IpTableRules
+from .ip_table_rules import IpTableRules
 
 @dataclass
 class Securite():
