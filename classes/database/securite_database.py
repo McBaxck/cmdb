@@ -2,6 +2,9 @@ from dataclasses import dataclass
 from interface_database import IDatabase
 from database import Database
 
+"""_summary_
+    classe CRUD qui est implémenté à partir d'InterfaceDatabase
+"""
 @dataclass
 class SecuriteDatabase(IDatabase):
 

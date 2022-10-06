@@ -1,5 +1,8 @@
 from database import Database
 
+"""_summary_
+    classe CRUD qui est implémenté à partir d'InterfaceDatabase
+"""
 class PartitionDatabase():
 
     def create(self, values) -> None:
