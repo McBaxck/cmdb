@@ -15,8 +15,19 @@ serveur_db = ServerDatabase()
 
 dd_recup = dd_db.selectById(1)
 
+dd_recup
+
 raid = RAID.RAID_5
 part1 = Partition("sda1",10,15)
-dd = HardDisk("Disque Dur 1",10,15,[part1])
+dd = HardDisk("Disque Dur 1",15,15,[part1])
 serv = Server("serveur 1 ",15,20,"cg","losthost",[dd],[],[],[raid])
+
+def test_label_dd():
+    assert dd.label == "Disque Dur 1"
+
+def test_unusedMemory():
+    assert dd.goUnusedMemory == 15
+
+def test_selectById():
+    assert (dd_recup.label == "Disque Dur 1" & dd_recup.goUnusedMemory == 15 & dd_recup.goUsedMermory == 15) 
 
