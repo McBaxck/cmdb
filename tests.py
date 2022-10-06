@@ -8,7 +8,7 @@ from classes.server.stockage.raid import RAID
 from classes.database.service_factory import ServiceFactory
 
 
-dd_recup = ServiceFactory.getDisqueDurDatabase.selectById(1)
+dd_recup = ServiceFactory.getDisqueDurDatabase().selectById(1)
 
 raid = RAID.RAID_5
 part1 = Partition("sda1",10,15)
