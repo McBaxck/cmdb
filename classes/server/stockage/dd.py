@@ -2,6 +2,9 @@ from dataclasses import dataclass
 from partition import Partition
 from typing import List
 
+"""_summary_
+    La classe HardDisk est une composition de la classe Server
+"""
 @dataclass
 class HardDisk():
     _label: str
