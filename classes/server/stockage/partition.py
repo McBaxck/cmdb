@@ -1,6 +1,5 @@
+
 from dataclasses import dataclass
-
-
 @dataclass
 class Partition():
     _label: str
@@ -13,10 +12,22 @@ class Partition():
 
     @property
     def goUnusedMemory(self) -> int:
+        """
+        précondtion: 
+        la mémoire non utilisée ne peux pas dépasser la mémoire totale de la partition
+        postcondition: 
+        La mémoire non utilisée et la mémoire non utilisée doivent être égale à la mémoire totale de la partition
+        """
         return self._goUnusedMemory
 
     @property
     def goUsedMemory(self) -> int:
+        """
+        précondtion: 
+        la mémoire utilisée ne peux pas dépasser la mémoire totale de la partition
+        postcondition: 
+        La mémoire utilisée et la mémoire non utilisée doivent être égale à la mémoire totale de la partition
+        """
         return self._goUsedMemory
 
     @label.setter
@@ -25,8 +36,20 @@ class Partition():
 
     @goUnusedMemory.setter
     def goUnusedMemory(self, new_space: int) -> None:
+        """
+        précondtion: 
+        la mémoire non utilisée ne peux pas dépasser la mémoire totale de la partition
+        postcondition: 
+        La mémoire utilisée et la mémoire non utilisée doivent être égale à la mémoire totale de la partition
+        """
         self._goUnusedMemory = new_space
 
     @goUsedMemory.setter
     def goUsedMemory(self, new_space: int) -> None:
+        """
+        précondtion: 
+        la mémoire utilisée ne peux pas dépasser la mémoire totale de la partition
+        postcondition: 
+        La mémoire utilisée et la mémoire non utilisée doivent être égale à la mémoire totale de la partition
+        """
         self._goUsedMemory = new_space

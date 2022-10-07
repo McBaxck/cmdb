@@ -3,41 +3,41 @@ from typing import List
 from classes.server.config.interface_reseau import InterfaceReseau
 from classes.server.stockage.raid import RAID
 from classes.server.config.securite import Securite
-from dd import HardDisk
+from classes.server.stockage.dd import HardDisk
 from abc import ABC
 
-    """_summary_
+"""_summary_
 
-    Attributs :
-        _label: str
-        _moRam: int
-        _cpu: str
-        _gpu: str
-        _hostname: str
-        _disks: List[HardDisk]
-        _interface_reseau: List[InterfaceReseau]
-        _securite: List[Securite]
-        _raid: List[RAID]
-    
-    Methodes : 
-        label(self) -> str
-        moRam(self) -> int
-        cpu(self) -> str
-        gpu(self) -> str
-        hostname(self) -> str
-        disks(self) -> List[HardDisk]
-        interfaceReseau(self) -> List[InterfaceReseau]
-        securite(self) -> List[Securite]
+Attributs :
+    _label: str
+    _moRam: int
+    _cpu: str
+    _gpu: str
+    _hostname: str
+    _disks: List[HardDisk]
+    _interface_reseau: List[InterfaceReseau]
+    _securite: List[Securite]
+    _raid: List[RAID]
 
-        @invariant: raid enum value ("RAID_0","RAID_1","RAID_2","RAID_5","RAID_6")
-        RAID(self) -> List[RAID]
+Methodes : 
+    label(self) -> str
+    moRam(self) -> int
+    cpu(self) -> str
+    gpu(self) -> str
+    hostname(self) -> str
+    disks(self) -> List[HardDisk]
+    interfaceReseau(self) -> List[InterfaceReseau]
+    securite(self) -> List[Securite]
+
+    @invariant: raid enum value ("RAID_0","RAID_1","RAID_2","RAID_5","RAID_6")
+    RAID(self) -> List[RAID]
 
 
-        La PhysicMachine et la classe VirtualMachine sont des enfants de la classe Server.
+    La PhysicMachine et la classe VirtualMachine sont des enfants de la classe Server.
 
-        Un server est composé de HardDisk. (composition)
+    Un server est composé de HardDisk. (composition)
 
-    """
+"""
 @dataclass
 class Server(ABC):
     _label: str
